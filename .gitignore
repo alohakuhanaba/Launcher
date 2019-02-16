@@ -1,0 +1,5 @@
+*.user
+.vs/
+Launcher/bin/
+Launcher/obj/
+packages/
