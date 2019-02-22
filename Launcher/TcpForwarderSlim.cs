@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Launcher
@@ -11,18 +12,22 @@ namespace Launcher
     class TcpForwarderSlim
     {
         // Token: 0x06000004 RID: 4 RVA: 0x00002404 File Offset: 0x00000604
-        public void Start(IPEndPoint local, IPEndPoint remote)
+        public Thread Start(IPEndPoint local, IPEndPoint remote)
         {
             this._mainSocket.Bind(local);
             this._mainSocket.Listen(10);
-            for (; ; )
+            return new Thread(() =>
             {
-                Socket socket = this._mainSocket.Accept();
-                TcpForwarderSlim tcpForwarderSlim = new TcpForwarderSlim();
-                TcpForwarderSlim.State state = new TcpForwarderSlim.State(socket, tcpForwarderSlim._mainSocket);
-                tcpForwarderSlim.Connect(remote, socket);
-                socket.BeginReceive(state.Buffer, 0, state.Buffer.Length, SocketFlags.None, new AsyncCallback(TcpForwarderSlim.OnDataReceive), state);
-            }
+                for (; ; )
+                {
+                    Socket socket = this._mainSocket.Accept();
+                    TcpForwarderSlim tcpForwarderSlim = new TcpForwarderSlim();
+                    TcpForwarderSlim.State state = new TcpForwarderSlim.State(socket, tcpForwarderSlim._mainSocket);
+                    tcpForwarderSlim.Connect(remote, socket);
+                    socket.BeginReceive(state.Buffer, 0, state.Buffer.Length, SocketFlags.None, new AsyncCallback(TcpForwarderSlim.OnDataReceive), state);
+
+                }
+            });
         }
 
         // Token: 0x06000005 RID: 5 RVA: 0x00002478 File Offset: 0x00000678

@@ -64,7 +64,7 @@ namespace Launcher
                 {
                     for (ushort port = lowPort; port <= highPort; port++)
                     {
-                        Thread thread = new Thread(() => new TcpForwarderSlim().Start(new IPEndPoint(fromIP, port), new IPEndPoint(toIP, port)));
+                        Thread thread = new TcpForwarderSlim().Start(new IPEndPoint(fromIP, port), new IPEndPoint(toIP, port));
                         threads.Add(thread);
                         thread.Start();
                     }
