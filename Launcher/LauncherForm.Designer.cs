@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LauncherForm));
             this.usernameIcon = new FontAwesome.Sharp.IconPictureBox();
             this.usernameTextbox = new MetroFramework.Controls.MetroTextBox();
             this.passwordIcon = new FontAwesome.Sharp.IconPictureBox();
@@ -333,6 +334,7 @@
             this.Controls.Add(this.ip0Textbox);
             this.Controls.Add(this.usernameTextbox);
             this.Controls.Add(this.usernameIcon);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
